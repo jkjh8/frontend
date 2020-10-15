@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="onDialog" max-width="800px" persistent scrollable>
+  <v-dialog :value="openDialog" max-width="800px" persistent scrollable>
     <v-card>
       <v-card-title>
         <h3>ADD FILES</h3>
@@ -40,8 +40,9 @@
 
 <script>
 import { mapState } from 'vuex'
+
 export default {
-  props: ['onDialog'],
+  props: ['openDialog'],
   data () {
     return {
       checkList: []
@@ -52,7 +53,8 @@ export default {
   },
   methods: {
     closeDialog: () => {
-      this.$emit('offDialog')
+      console.log('close')
+      this.$emit('closeDialog', false)
     }
   }
 }
