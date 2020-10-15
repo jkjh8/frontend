@@ -5,7 +5,7 @@
         <h3>ADD FILES</h3>
       </v-card-title>
       <v-card-text>
-        <v-list-item-group v-model="this.checkList" multiple active-class="">
+        <v-list-item-group v-model="checkList" multiple active-class="">
           <v-list-item v-for="(item, i) in fileList" :key="i">
             <template v-slot:default="{ active }">
               <v-list-item-action>
