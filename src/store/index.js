@@ -17,7 +17,11 @@ export default new Vuex.Store({
       state.playList = payload
     },
     addPlayList: (state, payload) => {
+      console.log(payload)
       state.playList.push(payload)
+    },
+    updateFileList: (state, payload) => {
+      state.fileList = payload
     },
     delPlayList: (state, payload) => {
       state.playList.splice(payload, 1)
@@ -25,10 +29,9 @@ export default new Vuex.Store({
   },
   actions: {
     getFileList ({ commit }) {
-      console.log('get start')
       return http.get('/getFileList').then(({ data }) => {
         commit('setFileList', data)
-        console.log(data)
+        // console.log(data)
       })
     }
   },
