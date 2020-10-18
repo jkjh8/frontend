@@ -134,9 +134,9 @@ export default {
     mountprocess = true
     this.$store.dispatch('getFileList')
     this.getPlayList()
-    this.$socket.on('chat', (data) => {
+    this.$socket.on('playlist', (data) => {
       console.log('playlist!', data)
-      // this.$store.commit('updatePlayList', data)
+      this.$store.commit('updatePlayList', data)
     })
   },
   methods: {
