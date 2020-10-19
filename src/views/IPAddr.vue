@@ -1,6 +1,6 @@
 <template>
   <v-container>
-      <v-card>
+      <v-card max-width="600px" style="align-center">
           <v-card-title class="grey lighten-4">IP ADDRESS SETUP
             <v-spacer/>
             <v-switch v-model="dhcp" label="DHCP" hide-details></v-switch>

@@ -13,6 +13,7 @@
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
     "vue-socket.io": "3.0.7",
+    "vue-video-player": "^5.0.2",
     "vuedraggable": "^2.24.2",
     "vuelidate": "^0.7.5",
     "vuetify": "^2.2.11",
