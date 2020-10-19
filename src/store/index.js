@@ -31,7 +31,6 @@ export default new Vuex.Store({
     getFileList ({ commit }) {
       return http.get('/getFileList').then(({ data }) => {
         commit('setFileList', data)
-        // console.log(data)
       })
     }
   },
