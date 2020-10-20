@@ -17,7 +17,7 @@
               {{ formatBytes(item.size) }}
             </template>
             <template v-slot:item.auctions="props">
-              <v-btn color="green darken-4" icon @click=delFile(props)>
+              <v-btn color="green darken-4" icon @click=Preview(props)>
                 <v-icon>mdi-play</v-icon>
               </v-btn>
               <v-btn  color="red darken-4" icon @click=DelFileModalOpen(props)>
@@ -35,28 +35,33 @@
     <v-dialog v-model="Processing" max-width="400px" persistent>
       <ProgressProcess></ProgressProcess>
     </v-dialog>
+    <v-dialog v-model="videoDialog" hide-overlay internal-activator max-width="700px" :aspect-ratio="16/9">
+      <VideoPreview :videoSource="videoSource" ref="mediaPlayer"></VideoPreview>
+    </v-dialog>
   </v-container>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-import http from '../api/http'
 import UploadService from '../api/UploadFilesService'
 import FormatUtil from '../api/FormatChange'
 import ProgressPopup from '../components/progressDialog'
 import FileUpload from '../components/FileUpload'
 import DeleteModal from '../components/DeleteModal'
 import ProgressProcess from '../components/ProgressProcess'
+import VideoPreview from '../components/VideoPreview'
 
 export default {
   components: {
-    ProgressPopup, FileUpload, DeleteModal, ProgressProcess
+    ProgressPopup, FileUpload, DeleteModal, ProgressProcess, VideoPreview
   },
   data () {
     return {
       progressValue: 0,
+      videoSource: 'width: 600',
       Processing: false,
       DelModal: false,
+      videoDialog: false,
       ProgressDialog: false,
       FileUploadDialog: false,
       uploadFileName: undefined,
@@ -85,10 +90,23 @@ export default {
     closeFileUploadDialog () { this.FileUploadDialog = false },
     DelFileModalOpen (fileId) { this.DelFileName = fileId.item; this.DelModal = true },
     DelFileModalClose () { this.DelModal = false },
+    Preview (file) {
+      // this.$$refs.mediaPlayer.pause()
+      // this.videoSource = file.item.name + '.' + file.item.type
+      this.videoDialog = true
+      this.videoSource = {
+        width: 700,
+        autoplay: true,
+        sources: [{
+          type: 'video/mp4',
+          src: 'http://' + window.location.hostname + ':12345/media/' + file.item.name + '.' + file.item.type
+        }]
+      }
+    },
     async DeleteFileProcess (file) {
       this.DelModal = false
       this.Processing = true
-      await http.post('/removeFile', { file: file.complete_name }).then(res => {
+      await this.$http.post('/removeFile', { file: file.complete_name }).then(res => {
         this.$store.commit('updateFileList', res.data)
       })
       this.Processing = false

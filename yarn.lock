@@ -8939,6 +8939,13 @@ vue-video-player@^5.0.2:
     videojs-flash "^2.1.0"
     videojs-hotkeys "^0.2.20"
 
+vue-window-size@^0.6.2:
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/vue-window-size/-/vue-window-size-0.6.2.tgz#02522e2c0d8a95f242e0249b6d72a47848bc4e01"
+  integrity sha512-/mODjnC5xdZb0T0UlnUzYgOgxeaUVCEuBZkiD4jss2LkByA+208SA+MhMKvZFcMvej484+7mDjr2q9TNIRj+Dw==
+  dependencies:
+    window-resize-subject "^1.4.2"
+
 vue@^2.6.11:
   version "2.6.12"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.12.tgz#f5ebd4fa6bd2869403e29a896aed4904456c9123"
@@ -9184,6 +9191,11 @@ which@^2.0.1:
   integrity sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA==
   dependencies:
     isexe "^2.0.0"
+
+window-resize-subject@^1.4.2:
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/window-resize-subject/-/window-resize-subject-1.4.3.tgz#91cb9d3f0e383b45253d58f966ccb0b43106290b"
+  integrity sha512-B1is3uwkqR4L0oBZ1OePtAly8PJV956J+WM8AGTVhhPL9U4jcBt6MJoZMRVrZe9y1RLFvMOrTGAyTEcjBi5siw==
 
 word-wrap@~1.2.3:
   version "1.2.3"

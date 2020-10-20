@@ -41,7 +41,6 @@
 
 <script>
 import { mapState } from 'vuex'
-import http from '../api/http'
 import FormatUtil from '../api/FormatChange'
 import draggable from 'vuedraggable'
 import ProgressProcess from '../components/ProgressProcess'
@@ -62,13 +61,13 @@ export default {
       get () { return this.$store.state.playList },
       set (value) {
         this.$store.commit('updatePlayList', value)
-        http.post('/setPlayList', value)
+        this.$http.post('/setPlayList', value)
       }
     }
   },
   created () {
     // this.$store.dispatch('getFileList')
-    http.get('/playlistrefresh')
+    this.$http.get('/playlistrefresh')
     this.getPlayList()
     this.$socket.on('playlist', (data) => {
       this.$store.commit('updatePlayList', data)
@@ -76,17 +75,17 @@ export default {
   },
   methods: {
     Player (command) {
-      http.post('/player', command).then((res) => {
+      this.$http.post('/player', command).then((res) => {
         console.log(res.data)
       })
     },
     async delPlayListItem (id) {
       await this.$store.commit('delPlayList', id)
-      http.post('/setPlayList', this.playList)
+      this.$http.post('/setPlayList', this.playList)
     },
     async getPlayList () {
       this.Processing = true
-      await http.get('/getPlayList').then(res => {
+      await this.$http.get('/getPlayList').then(res => {
         this.$store.commit('updatePlayList', res.data)
       })
       this.Processing = false

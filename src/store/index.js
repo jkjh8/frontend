@@ -7,7 +7,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     fileList: [],
-    playList: []
+    playList: [],
+    playerSetup: []
   },
   mutations: {
     setFileList: (state, payload) => {
@@ -25,12 +26,26 @@ export default new Vuex.Store({
     },
     delPlayList: (state, payload) => {
       state.playList.splice(payload, 1)
+    },
+    updatePlayerSetup: (state, payload) => {
+      state.playerSetup = payload
+    },
+    updateObjPlayerSetup: (state, value) => {
+      value.forEach(element => {
+        const key = Object.keys(element)
+        state.playerSetup[key[0]] = element[key[0]]
+      })
     }
   },
   actions: {
     getFileList ({ commit }) {
       return http.get('/getFileList').then(({ data }) => {
         commit('setFileList', data)
+      })
+    },
+    getPlayerSetup ({ commit }) {
+      return http.get('/getSetup').then(({ data }) => {
+        commit('updatePlayerSetup', data)
       })
     }
   },

@@ -3,7 +3,7 @@
     <AppBar></AppBar>
 
     <v-main>
-      <router-view class="pb-10 mb-12 px-6"></router-view>
+      <router-view class="pb-10 mb-12 px-6" align="center"></router-view>
     </v-main>
 
     <Footer></Footer>
