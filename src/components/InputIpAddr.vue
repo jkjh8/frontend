@@ -51,7 +51,7 @@ export default {
       setTimeout(() => (this.errmsg = false), 2000)
     }
   },
-  mounted () {
+  created () {
     this.ip = this.playerSetup.ip
     this.nm = this.playerSetup.nm
     this.gw = this.playerSetup.gw
@@ -105,6 +105,9 @@ export default {
         this.$http.post('/setSetup', this.playerSetup)
       }
     }
+  },
+  beforeDestroy () {
+    this.$store.dispatch('getPlayerSetup')
   }
 }
 </script>

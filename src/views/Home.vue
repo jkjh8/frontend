@@ -66,9 +66,6 @@ export default {
     }
   },
   created () {
-    // this.$store.dispatch('getFileList')
-    this.$http.get('/playlistrefresh')
-    this.getPlayList()
     this.$socket.on('playlist', (data) => {
       this.$store.commit('updatePlayList', data)
     })
@@ -82,13 +79,6 @@ export default {
     async delPlayListItem (id) {
       await this.$store.commit('delPlayList', id)
       this.$http.post('/setPlayList', this.playList)
-    },
-    async getPlayList () {
-      this.Processing = true
-      await this.$http.get('/getPlayList').then(res => {
-        this.$store.commit('updatePlayList', res.data)
-      })
-      this.Processing = false
     },
     OpenDialog () {
       this.$store.dispatch('getFileList')
@@ -104,10 +94,10 @@ export default {
     formatTimes (milliseconds) {
       const listtime = FormatUtil.formatTimes(milliseconds)
       return (listtime)
-    },
-    onPreview (id) {
-      console.log(id)
     }
+  },
+  beforeDestroy () {
+    this.$store.dispatch('getPlayList')
   }
 }
 </script>

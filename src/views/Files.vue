@@ -139,6 +139,9 @@ export default {
       const listtime = FormatUtil.formatTimes(milliseconds)
       return listtime
     }
+  },
+  beforeDestroy () {
+    this.$store.dispatch('getFileList')
   }
 }
 </script>

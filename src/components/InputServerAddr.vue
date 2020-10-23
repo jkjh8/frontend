@@ -33,7 +33,7 @@ export default {
     serverip: { ipAddress, required },
     serverport: { required, maxValue: maxValue(65535) }
   },
-  mounted () {
+  created () {
     this.serverip = this.playerSetup.rtIp
     this.serverport = this.playerSetup.rtPort
   },

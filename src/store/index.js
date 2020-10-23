@@ -47,6 +47,11 @@ export default new Vuex.Store({
       return http.get('/getSetup').then(({ data }) => {
         commit('updatePlayerSetup', data)
       })
+    },
+    getPlayList ({ commit }) {
+      return http.get('/getPlayList').then(res => {
+        commit('updatePlayList', res.data)
+      })
     }
   },
   modules: {
