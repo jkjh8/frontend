@@ -5,6 +5,11 @@
       <v-card-text>
         <v-list>
           <v-list-item>
+            POWER ON PLAY
+            <v-spacer/>
+            <v-switch v-model="poweronplay" @change="setupChange('poweronplay', $event)"></v-switch>
+          </v-list-item>
+          <v-list-item>
             LOOP ONE
             <v-spacer/>
             <v-switch v-model="loop_one" @change="setupChange('loop_one', $event)"></v-switch>
@@ -43,17 +48,29 @@ export default {
     //
   },
   created () {
-    this.loop_one = this.playerSetup.loop_one
-    this.loop = this.playerSetup.loop
-    this.fullscreen = this.playerSetup.fullscreen
-    this.progress = this.playerSetup.progress
-    this.endclose = this.playerSetup.endclose
+    this.$socket.on('playlist', (data) => { this.$store.commit('updatePlayList', data) })
+    this.$socket.on('filelist', (data) => { this.$store.commit('updateFileList', data) })
+    this.$socket.on('setup', (data) => { this.$store.commit('updatePlayerSetup', data) })
+    this.$socket.emit('playlist')
+    this.$socket.emit('filelist')
+    this.$socket.emit('setup')
+  },
+  watch: {
+    playerSetup (vale) {
+      this.poweronplay = this.playerSetup.poweronplay
+      this.loop_one = this.playerSetup.loop_one
+      this.loop = this.playerSetup.loop
+      this.fullscreen = this.playerSetup.fullscreen
+      this.progress = this.playerSetup.progress
+      this.endclose = this.playerSetup.endclose
+    }
   },
   computed: {
-    ...mapState(['playerSetup'])
+    ...mapState(['playlist', 'filelist', 'playerSetup'])
   },
   data () {
     return {
+      poweronplay: false,
       loop_one: false,
       loop: false,
       fullscreen: false,
@@ -65,7 +82,7 @@ export default {
     async setupChange (id, value) {
       if (value !== true) { value = false }
       this.playerSetup[id] = value
-      await this.$http.post('/setSetup', this.playerSetup)
+      await this.$http.post('/setup', this.playerSetup)
       this.$store.dispatch('getPlayerSetup')
     }
   }

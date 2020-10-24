@@ -17,10 +17,7 @@ import Footer from './components/Footer'
 export default {
   name: 'App',
   created () {
-    this.$http.get('/playlistrefresh')
-    this.$store.dispatch('getFileList')
-    this.$store.dispatch('getPlayerSetup')
-    this.$store.dispatch('getPlayList')
+    //
   },
   components: {
     AppBar,

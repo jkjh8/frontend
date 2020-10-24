@@ -24,7 +24,17 @@ export default {
     InputIpAddr, InputServerAddr
   },
   mounted () {
-    this.dhcp = this.playerSetup.dhcp
+    this.$socket.on('playlist', (data) => { this.$store.commit('updatePlayList', data) })
+    this.$socket.on('filelist', (data) => { this.$store.commit('updateFileList', data) })
+    this.$socket.on('setup', (data) => { this.$store.commit('updatePlayerSetup', data) })
+    this.$socket.emit('playlist')
+    this.$socket.emit('filelist')
+    this.$socket.emit('setup')
+  },
+  watch: {
+    playerSetup () {
+      this.dhcp = this.playerSetup.dhcp
+    }
   },
   computed: {
     ...mapState(['playerSetup'])
@@ -37,7 +47,7 @@ export default {
   methods: {
     dhcpChange (value) {
       this.playerSetup.dhcp = value
-      this.$http.post('/setSetup', this.playerSetup)
+      this.$http.post('/setup', this.playerSetup)
     }
   },
   beforeDestroy () {

@@ -60,3 +60,6 @@ export default {
   }
 }
 </script>
+<style>
+.vjs-default-skin.vjs-paused .vjs-big-play-button { display: none; }
+</style>

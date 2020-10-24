@@ -39,17 +39,22 @@ export default new Vuex.Store({
   },
   actions: {
     getFileList ({ commit }) {
-      return http.get('/getFileList').then(({ data }) => {
+      return http.get('/filelist').then(({ data }) => {
         commit('setFileList', data)
       })
     },
     getPlayerSetup ({ commit }) {
-      return http.get('/getSetup').then(({ data }) => {
+      return http.get('/setup').then(({ data }) => {
         commit('updatePlayerSetup', data)
       })
     },
     getPlayList ({ commit }) {
-      return http.get('/getPlayList').then(res => {
+      return http.get('/playlist').then(res => {
+        commit('updatePlayList', res.data)
+      })
+    },
+    postPlayList ({ commit }, data) {
+      return http.post('/playlist', data).then(res => {
         commit('updatePlayList', res.data)
       })
     }

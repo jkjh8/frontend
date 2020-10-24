@@ -60,15 +60,18 @@ export default {
     playList: {
       get () { return this.$store.state.playList },
       set (value) {
-        this.$store.commit('updatePlayList', value)
-        this.$http.post('/setPlayList', value)
+        this.$store.dispatch('postPlayList', value)
       }
     }
   },
-  created () {
-    this.$socket.on('playlist', (data) => {
-      this.$store.commit('updatePlayList', data)
-    })
+  mounted () {
+    this.$store.dispatch('getPlayList')
+    this.$socket.on('playlist', (data) => { this.$store.commit('updatePlayList', data) })
+    this.$socket.on('filelist', (data) => { this.$store.commit('updateFileList', data) })
+    this.$socket.on('setup', (data) => { this.$store.commit('updatePlayerSetup', data) })
+    this.$socket.emit('playlist')
+    this.$socket.emit('filelist')
+    this.$socket.emit('setup')
   },
   methods: {
     Player (command) {
@@ -78,7 +81,7 @@ export default {
     },
     async delPlayListItem (id) {
       await this.$store.commit('delPlayList', id)
-      this.$http.post('/setPlayList', this.playList)
+      this.$store.dispatch('postPlayList', this.playList)
     },
     OpenDialog () {
       this.$store.dispatch('getFileList')
@@ -95,9 +98,9 @@ export default {
       const listtime = FormatUtil.formatTimes(milliseconds)
       return (listtime)
     }
-  },
-  beforeDestroy () {
-    this.$store.dispatch('getPlayList')
   }
+  // beforeDestroy () {
+  //   this.$store.dispatch('getPlayList')
+  // }
 }
 </script>

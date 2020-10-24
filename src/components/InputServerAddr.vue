@@ -33,14 +33,14 @@ export default {
     serverip: { ipAddress, required },
     serverport: { required, maxValue: maxValue(65535) }
   },
-  created () {
-    this.serverip = this.playerSetup.rtIp
-    this.serverport = this.playerSetup.rtPort
-  },
   watch: {
     errmsg (val) {
       if (!val) return
       setTimeout(() => (this.errmsg = false), 2000)
+    },
+    playerSetup () {
+      this.serverip = this.playerSetup.rtIp
+      this.serverport = this.playerSetup.rtPort
     }
   },
   data: () => ({
@@ -80,7 +80,7 @@ export default {
         this.alertType = 'success'
         this.alertMessage = 'Ok! applied'
         this.errmsg = true
-        this.$http.post('/setSetup', this.playerSetup)
+        this.$http.post('/setup', this.playerSetup)
       }
     }
   }

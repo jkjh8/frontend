@@ -49,12 +49,12 @@ export default {
     errmsg (val) {
       if (!val) return
       setTimeout(() => (this.errmsg = false), 2000)
+    },
+    playerSetup (value) {
+      this.ip = this.playerSetup.ip
+      this.nm = this.playerSetup.nm
+      this.gw = this.playerSetup.gw
     }
-  },
-  created () {
-    this.ip = this.playerSetup.ip
-    this.nm = this.playerSetup.nm
-    this.gw = this.playerSetup.gw
   },
   data: () => ({
     ip: '',
@@ -102,12 +102,9 @@ export default {
         this.alertType = 'success'
         this.alertMessage = 'Apply after reboot'
         this.errmsg = true
-        this.$http.post('/setSetup', this.playerSetup)
+        this.$http.post('/setup', this.playerSetup)
       }
     }
-  },
-  beforeDestroy () {
-    this.$store.dispatch('getPlayerSetup')
   }
 }
 </script>

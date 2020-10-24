@@ -36,7 +36,6 @@
 <script>
 import { mapState } from 'vuex'
 import FormatUtil from '../api/FormatChange'
-import http from '../api/http'
 import VideoPreview from '../components/VideoPreview'
 
 export default {
@@ -66,9 +65,8 @@ export default {
       await this.checkList.forEach((element) => {
         element.color = this.ramdomColor()
         this.$store.commit('addPlayList', element)
-        console.log(element)
       })
-      http.post('/setPlayList', this.playList)
+      this.$store.dispatch('postPlayList', this.playList)
       this.cancel()
     },
     cancel () {

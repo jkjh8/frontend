@@ -35,7 +35,7 @@
     <v-dialog v-model="Processing" max-width="400px" persistent>
       <ProgressProcess></ProgressProcess>
     </v-dialog>
-    <v-dialog v-model="videoDialog" hide-overlay internal-activator max-width="700px" :aspect-ratio="16/9">
+    <v-dialog v-model="videoDialog" internal-activator max-width="700px" :aspect-ratio="16/9">
       <VideoPreview :videoSource="videoSource" ref="mediaPlayer"></VideoPreview>
     </v-dialog>
   </v-container>
@@ -79,11 +79,14 @@ export default {
   computed: {
     ...mapState(['playList', 'fileList'])
   },
-  created () {
+  mounted () {
     this.$store.dispatch('getFileList')
-    this.$socket.on('filelist', (data) => {
-      this.$store.commit('updateFileList', data)
-    })
+    this.$socket.on('playlist', (data) => { this.$store.commit('updatePlayList', data) })
+    this.$socket.on('filelist', (data) => { this.$store.commit('updateFileList', data) })
+    this.$socket.on('setup', (data) => { this.$store.commit('updatePlayerSetup', data) })
+    this.$socket.emit('playlist')
+    this.$socket.emit('filelist')
+    this.$socket.emit('setup')
   },
   methods: {
     openUploadfileDialog () { this.FileUploadDialog = true },
