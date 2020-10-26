@@ -74,7 +74,7 @@ export default {
       } else {
         const rtdata = [
           { rtIp: this.serverip },
-          { rtPort: this.serverport }
+          { rtPort: Number(this.serverport) }
         ]
         this.$store.commit('updateObjPlayerSetup', rtdata)
         this.alertType = 'success'
